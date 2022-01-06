@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeosModConfigurationExample", "NeosModConfigurationExample\NeosModConfigurationExample.csproj", "{131BCCF9-6220-4831-9832-9671ACE4686E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{131BCCF9-6220-4831-9832-9671ACE4686E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{131BCCF9-6220-4831-9832-9671ACE4686E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{131BCCF9-6220-4831-9832-9671ACE4686E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{131BCCF9-6220-4831-9832-9671ACE4686E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {023E4190-76B5-400D-80F8-4FBA92858EF7}
+	EndGlobalSection
+EndGlobal
