@@ -9,18 +9,18 @@ namespace NeosModConfigurationExample
     {
         public override string Name => "NeosModConfigurationExample";
         public override string Author => "runtime";
-        public override string Version => "1.1.0";
+        public override string Version => "1.2.0";
         public override string Link => "https://github.com/zkxs/NeosModConfigurationExample";
 
         private readonly ModConfigurationKey<bool> KEY_ENABLE = new ModConfigurationKey<bool>("enabled", "Enables the NeosModConfigurationExample mod", () => true);
         private readonly ModConfigurationKey<int> KEY_COUNT = new ModConfigurationKey<int>("count", "Example counter", internalAccessOnly: true);
 
-        public override ModConfigurationDefinition GetConfigurationDefinition()
+        public override void DefineConfiguration(ModConfigurationDefinitionBuilder builder)
         {
-            List<ModConfigurationKey> keys = new List<ModConfigurationKey>();
-            keys.Add(KEY_ENABLE);
-            keys.Add(KEY_COUNT);
-            return DefineConfiguration(new Version(1, 0, 0), keys);
+            builder
+                .Version(new Version(1, 0, 0))
+                .Key(KEY_ENABLE)
+                .Key(KEY_COUNT);
         }
 
         public override void OnEngineInit()
