@@ -12,15 +12,18 @@ namespace NeosModConfigurationExample
         public override string Version => "1.2.0";
         public override string Link => "https://github.com/zkxs/NeosModConfigurationExample";
 
+        [AutoRegisterConfigKey]
         private readonly ModConfigurationKey<bool> KEY_ENABLE = new ModConfigurationKey<bool>("enabled", "Enables the NeosModConfigurationExample mod", () => true);
+
+        [AutoRegisterConfigKey]
         private readonly ModConfigurationKey<int> KEY_COUNT = new ModConfigurationKey<int>("count", "Example counter", internalAccessOnly: true);
 
+        // this override lets us change optional settings in our configuration definition
         public override void DefineConfiguration(ModConfigurationDefinitionBuilder builder)
         {
             builder
-                .Version(new Version(1, 0, 0))
-                .Key(KEY_ENABLE)
-                .Key(KEY_COUNT);
+                .Version(new Version(1, 0, 0)) // manually set config version (default is 1.0.0)
+                .AutoSave(false); // don't autosave on Neos shutdown (default is true)
         }
 
         public override void OnEngineInit()
@@ -57,7 +60,10 @@ namespace NeosModConfigurationExample
                 Msg($"Initializing count to {countValue}");
             }
 
+            // This sets the value in memory. It's immediately available to anyone reading this config.
             config.Set(KEY_COUNT, countValue);
+
+            // It's good practice to save after you modifiy configuration values. This writes the in-memory changes to disk.
             config.Save();
         }
 
@@ -65,7 +71,7 @@ namespace NeosModConfigurationExample
         {
             List<NeosModBase> mods = new List<NeosModBase>(ModLoader.Mods());
             List<NeosModBase> configuredMods = mods
-                .Where(m => m.GetConfiguration() != null)
+                .Where(m => m.GetConfiguration() != null) // mods that do not define a configuration have a null GetConfiguration() result.
                 .ToList();
             Debug($"{mods.Count} mods are loaded, {configuredMods.Count} of them have configurations");
 
@@ -74,7 +80,7 @@ namespace NeosModConfigurationExample
                 ModConfiguration config = mod.GetConfiguration();
                 foreach (ModConfigurationKey key in config.ConfigurationItemDefinitions)
                 {
-                    if (!key.InternalAccessOnly)
+                    if (!key.InternalAccessOnly) // As we are an external mod enumerating configs, we should ignore internal-only configuration items
                     {
 
                         if (config.TryGetValue(key, out object value))
