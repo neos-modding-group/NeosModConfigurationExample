@@ -63,7 +63,7 @@ namespace NeosModConfigurationExample
             // This sets the value in memory. It's immediately available to anyone reading this config.
             config.Set(KEY_COUNT, countValue);
 
-            // It's good practice to save after you modifiy configuration values. This writes the in-memory changes to disk.
+            // It's good practice to save after you modify configuration values. This writes the in-memory changes to disk.
             config.Save();
         }
 
