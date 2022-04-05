@@ -1,54 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{131BCCF9-6220-4831-9832-9671ACE4686E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NeosModConfigurationExample</RootNamespace>
-    <AssemblyName>NeosModConfigurationExample</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <AssemblyTitle>NeosModConfigurationExample</AssemblyTitle>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <TargetFramework>net462</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NeosPath>$(MSBuildThisFileDirectory)NeosVR</NeosPath>
+    <NeosPath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\NeosVR\')">C:\Program Files (x86)\Steam\steamapps\common\NeosVR\</NeosPath>
+    <NeosPath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/NeosVR/')">$(HOME)/.steam/steam/steamapps/common/NeosVR/</NeosPath>
+    <CopyLocal>false</CopyLocal>
+    <CopyToMods Condition="'$(CopyToMods)'==''">true</CopyToMods>
+    <DebugSymbols Condition="'$(Configuration)'=='Release'">false</DebugSymbols>
+    <DebugType Condition="'$(Configuration)'=='Release'">None</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="NeosModLoader, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\NeosVR\Libraries\NeosModLoader.dll</HintPath>
+    <PackageReference Include="Lib.Harmony" Version="2.2.1" />
+    <Reference Include="BaseX">
+      <HintPath>$(NeosPath)Neos_Data\Managed\BaseX.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="NeosModLoader">
+      <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="NeosModConfigurationExample.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)\$(TargetFileName)" "C:\Program Files (x86)\Steam\steamapps\common\NeosVR\nml_mods\"</PostBuildEvent>
-  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(NeosPath)nml_mods" />
+  </Target>
 </Project>
