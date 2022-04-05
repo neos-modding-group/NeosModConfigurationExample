@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using BaseX;
 
 namespace NeosModConfigurationExample
 {
@@ -9,7 +10,7 @@ namespace NeosModConfigurationExample
     {
         public override string Name => "NeosModConfigurationExample";
         public override string Author => "runtime";
-        public override string Version => "1.2.0";
+        public override string Version => "1.3.0";
         public override string Link => "https://github.com/zkxs/NeosModConfigurationExample";
 
         [AutoRegisterConfigKey]
@@ -17,6 +18,12 @@ namespace NeosModConfigurationExample
 
         [AutoRegisterConfigKey]
         private readonly ModConfigurationKey<int> KEY_COUNT = new ModConfigurationKey<int>("count", "Example counter", internalAccessOnly: true);
+
+        [AutoRegisterConfigKey]
+        private readonly ModConfigurationKey<color> KEY_TEST_COLOR = new ModConfigurationKey<color>("test_color", "serialization test color");
+
+        [AutoRegisterConfigKey]
+        private readonly ModConfigurationKey<float3> KEY_TEST_FLOAT3 = new ModConfigurationKey<float3>("test_float3", "serialization test float3");
 
         // this override lets us change optional settings in our configuration definition
         public override void DefineConfiguration(ModConfigurationDefinitionBuilder builder)
@@ -42,6 +49,13 @@ namespace NeosModConfigurationExample
             // update our counter config
             UpdateCount();
 
+            // test serializing some Froox types
+            config.Set(KEY_TEST_COLOR, new color(0.5f, 0.5f, 0.5f));
+            config.Set(KEY_TEST_FLOAT3, new float3(1.0f, 2.0f, 3.0f));
+
+            // It's good practice to save after you modify configuration values. This writes the in-memory changes to disk.
+            config.Save();
+
             // list all configs
             EnumerateConfigs();
         }
@@ -49,7 +63,7 @@ namespace NeosModConfigurationExample
         private void UpdateCount()
         {
             ModConfiguration config = GetConfiguration();
-            int countValue = default(int);
+            int countValue = 0;
             if (config.TryGetValue(KEY_COUNT, out countValue))
             {
                 int oldValue = countValue++;
@@ -62,9 +76,6 @@ namespace NeosModConfigurationExample
 
             // This sets the value in memory. It's immediately available to anyone reading this config.
             config.Set(KEY_COUNT, countValue);
-
-            // It's good practice to save after you modify configuration values. This writes the in-memory changes to disk.
-            config.Save();
         }
 
         private void EnumerateConfigs()
