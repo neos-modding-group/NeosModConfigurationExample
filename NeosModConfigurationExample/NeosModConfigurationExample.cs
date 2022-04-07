@@ -10,7 +10,7 @@ namespace NeosModConfigurationExample
     {
         public override string Name => "NeosModConfigurationExample";
         public override string Author => "runtime";
-        public override string Version => "1.3.0";
+        public override string Version => "1.4.0";
         public override string Link => "https://github.com/zkxs/NeosModConfigurationExample";
 
         [AutoRegisterConfigKey]
@@ -24,6 +24,9 @@ namespace NeosModConfigurationExample
 
         [AutoRegisterConfigKey]
         private readonly ModConfigurationKey<float3> KEY_TEST_FLOAT3 = new ModConfigurationKey<float3>("test_float3", "serialization test float3");
+
+        [AutoRegisterConfigKey]
+        private readonly ModConfigurationKey<Alignment> KEY_TEST_ENUM = new ModConfigurationKey<Alignment>("test_enum", "serialization test enum");
 
         // this override lets us change optional settings in our configuration definition
         public override void DefineConfiguration(ModConfigurationDefinitionBuilder builder)
@@ -52,6 +55,7 @@ namespace NeosModConfigurationExample
             // test serializing some Froox types
             config.Set(KEY_TEST_COLOR, new color(0.5f, 0.5f, 0.5f));
             config.Set(KEY_TEST_FLOAT3, new float3(1.0f, 2.0f, 3.0f));
+            config.Set(KEY_TEST_ENUM, Alignment.BottomCenter);
 
             // It's good practice to save after you modify configuration values. This writes the in-memory changes to disk.
             config.Save();
