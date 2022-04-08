@@ -20,15 +20,15 @@
 
   <ItemGroup>
     <Reference Include="HarmonyLib">
-      <HintPath>$(NeosPath)0Harmony.dll</HintPath>
       <HintPath>$(NeosPath)nml_libs\0Harmony.dll</HintPath>
+      <HintPath Condition="Exists('$(NeosPath)0Harmony.dll')">$(NeosPath)0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="BaseX">
       <HintPath>$(NeosPath)Neos_Data\Managed\BaseX.dll</HintPath>
     </Reference>
     <Reference Include="NeosModLoader">
-      <HintPath>$(NeosPath)NeosModLoader.dll</HintPath>
       <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
+      <HintPath Condition="Exists('$(NeosPath)NeosModLoader.dll')">$(NeosPath)NeosModLoader.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(NeosPath)Neos_Data\Managed\Newtonsoft.Json.dll</HintPath>
