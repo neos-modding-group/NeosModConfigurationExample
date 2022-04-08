@@ -38,5 +38,6 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(NeosPath)nml_mods" />
+    <Message Text="Copied $(TargetFileName) to $(NeosPath)nml_mods" Importance="high" />
   </Target>
 </Project>
