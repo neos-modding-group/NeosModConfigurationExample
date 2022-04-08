@@ -28,6 +28,9 @@ namespace NeosModConfigurationExample
         [AutoRegisterConfigKey]
         private readonly ModConfigurationKey<Alignment> KEY_TEST_ENUM = new ModConfigurationKey<Alignment>("test_enum", "serialization test enum");
 
+        [AutoRegisterConfigKey]
+        private readonly ModConfigurationKey<CustomClass> KEY_TEST_CUSTOM_CLASS = new ModConfigurationKey<CustomClass>("test_custom_class", "serialization test custom class");
+
         // this override lets us change optional settings in our configuration definition
         public override void DefineConfiguration(ModConfigurationDefinitionBuilder builder)
         {
@@ -56,6 +59,7 @@ namespace NeosModConfigurationExample
             config.Set(KEY_TEST_COLOR, new color(0.5f, 0.5f, 0.5f));
             config.Set(KEY_TEST_FLOAT3, new float3(1.0f, 2.0f, 3.0f));
             config.Set(KEY_TEST_ENUM, Alignment.BottomCenter);
+            config.Set(KEY_TEST_CUSTOM_CLASS, new CustomClass("foo", "bar", "baz"));
 
             // It's good practice to save after you modify configuration values. This writes the in-memory changes to disk.
             config.Save();
