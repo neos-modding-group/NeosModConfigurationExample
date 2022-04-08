@@ -19,11 +19,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.2.1" />
+    <Reference Include="HarmonyLib">
+      <HintPath>$(NeosPath)0Harmony.dll</HintPath>
+      <HintPath>$(NeosPath)nml_libs\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="BaseX">
       <HintPath>$(NeosPath)Neos_Data\Managed\BaseX.dll</HintPath>
     </Reference>
     <Reference Include="NeosModLoader">
+      <HintPath>$(NeosPath)NeosModLoader.dll</HintPath>
       <HintPath>$(NeosPath)Libraries\NeosModLoader.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
@@ -33,5 +37,6 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(NeosPath)nml_mods" />
+    <Message Text="Copied $(TargetFileName) to $(NeosPath)nml_mods" Importance="high" />
   </Target>
 </Project>
